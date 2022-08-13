@@ -22,7 +22,7 @@ Then run the install script and input the details and you should be
 all good to go!
 
 ```sh
-python install.sh
+./install.sh
 ```
 
 ## Keybinding
