@@ -1,3 +1,4 @@
-credentials.py
+credentials.json
 .cache
 __pycache__
+**.egg-info
