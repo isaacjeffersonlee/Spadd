@@ -64,7 +64,7 @@ def sp_notify(title: str, description: str, duration: int) -> None:
     )
 
 
-def menu_show(items: list[str]) -> str:
+def menu_show(items: list[str], prompt: str = "> ") -> str:
     """Display items with dmenu/bemenu and return selected item.
 
     XDG_SESSION_TYPE is queried and either dmenu or bemenu is used
@@ -74,6 +74,8 @@ def menu_show(items: list[str]) -> str:
     ----------
     items : list[str]
         Items to display in a vertical list using dmenu/bemenu
+    prompt : str
+        Left prompt to pass to the -p flag
 
     Returns
     -------
@@ -86,7 +88,7 @@ def menu_show(items: list[str]) -> str:
     else:  # Fallback to dmenu if x11 or $XDG_SESSION_TYPE not found
         menu = "dmenu"
     newline_items = "\\n".join([str(item) for item in items])
-    cmd = f"printf '{newline_items}' | {menu} -i -l {len(items)}"
+    cmd = f"printf '{newline_items}' | {menu} -i -p '{prompt}' -l {len(items)}"
     ps = subprocess.Popen(
         cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT
     )
@@ -98,7 +100,7 @@ def main() -> None:
     """Entry point."""
     playlists = sp.current_user_playlists(limit=50, offset=0)["items"]
     playlist_names = [playlist["name"] for playlist in playlists]
-    playlist_name = menu_show(playlist_names)
+    playlist_name = menu_show(playlist_names, "Select playlist: ")
     if not playlist_name:
         pass
     else:
