@@ -12,9 +12,9 @@ read -p "Spotify Secret: " CLIENT_SECRET
 read -p "Spotify Redirect URI: " REDIRECT_URI
 
 echo "# .* This config file was automatically generated *." > credentials.py
-echo "client_id = '$CLIENT_ID'" >> credentials.py
-echo "client_secret = '$CLIENT_SECRET'" >> credentials.py
-echo "redirect_uri = '$REDIRECT_URI'" >> credentials.py
+echo "CLIENT_ID = '$CLIENT_ID'" >> ./spadd/credentials.py
+echo "CLIENT_SECRET = '$CLIENT_SECRET'" >> ./spadd/credentials.py
+echo "REDIRECT_URI = '$REDIRECT_URI'" >> ./spadd/credentials.py
 
 echo "Generated ./credentials.py"
 
