@@ -18,8 +18,10 @@ echo "REDIRECT_URI = '$REDIRECT_URI'" >> ./spadd/credentials.py
 
 echo "Generated ./credentials.py"
 
-echo "pip installing spotipy..."
+echo "pip installing requirements..."
 pip install -r requirements.txt
+echo "pip installing spadd"
+cd .. && pip install -e Spadd
 
 echo "------------------------------------------------------------------"
 echo ""
