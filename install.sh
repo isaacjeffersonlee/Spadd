@@ -12,12 +12,13 @@ read -p "Spotify Secret: " CLIENT_SECRET
 read -p "Spotify Redirect URI: " REDIRECT_URI
 
 echo "{" >> credentials.json
-echo "\"CLIENT_ID:\"" "\"$CLIENT_ID\"" >> credentials.json
-echo "\"CLIENT_SECRET:\"" "\"$CLIENT_SECRET\"" >> credentials.json
-echo "\"REDIRECT_URI:\"" "\"$REDIRECT_URI\"" >> credentials.json
+echo "  \"CLIENT_ID\":" "\"$CLIENT_ID\"," >> credentials.json
+echo "  \"CLIENT_SECRET\":" "\"$CLIENT_SECRET\"," >> credentials.json
+echo "  \"REDIRECT_URI\":" "\"$REDIRECT_URI\"" >> credentials.json
 echo "}" >> credentials.json
 
-echo "Generated credentials.json"
+echo "Generated credentials.json:"
+cat credentials.json
 
 echo "pip installing requirements..."
 pip install -r requirements.txt
