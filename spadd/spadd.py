@@ -1,10 +1,24 @@
 #!/usr/bin/env python3
-import credentials
 import subprocess
 import os
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 
+# Absolute path of the spadd module directory
+MODULE_PATH = os.path.abspath(
+    os.path.join(os.path.dirname(__file__))
+)
+# Absolute path of the parent directory of spadd module
+ROOT_PATH = os.path.dirname(MODULE_PATH)
+# Get app credentials
+with open(f"{ROOT_PATH}/credentials.json", 'r') as f:
+    credentials = json.load(f)
+CLIENT_SECRET = credentials["CLIENT_SECRET"]
+CLIENT_ID = credentials["CLIENT_ID"]
+REDIRECT_URI = credentials["REDIRECT_URI"]
+# Other paths
+CACHE_PATH = ROOT_PATH + "/.cache"
+IMG_PATH = ROOT_PATH + "/Images"
 # Spotify permissions required
 SCOPE = [
     "playlist-modify-private",
@@ -14,16 +28,6 @@ SCOPE = [
     "user-read-currently-playing",
     "playlist-read-collaborative",
 ]
-# Client Credentials
-CLIENT_SECRET = credentials.CLIENT_SECRET
-CLIENT_ID = credentials.CLIENT_ID
-REDIRECT_URI = credentials.REDIRECT_URI
-MODULE_PATH = os.path.abspath(
-    os.path.join(os.path.dirname(__file__))
-)
-ROOT_PATH = os.path.dirname(MODULE_PATH)
-CACHE_PATH = MODULE_PATH + "/.cache"
-IMG_PATH = ROOT_PATH + "/Images"
 # Initialize Spotify OAuth2 Authentication manager
 AUTH_MANAGER = spotipy.oauth2.SpotifyOAuth(
     client_id=CLIENT_ID,

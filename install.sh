@@ -11,12 +11,13 @@ read -p "Spotify Client ID: " CLIENT_ID
 read -p "Spotify Secret: " CLIENT_SECRET
 read -p "Spotify Redirect URI: " REDIRECT_URI
 
-echo "# .* This config file was automatically generated *." > credentials.py
-echo "CLIENT_ID = '$CLIENT_ID'" >> ./spadd/credentials.py
-echo "CLIENT_SECRET = '$CLIENT_SECRET'" >> ./spadd/credentials.py
-echo "REDIRECT_URI = '$REDIRECT_URI'" >> ./spadd/credentials.py
+echo "{" >> credentials.json
+echo "\"CLIENT_ID:\"" "\"$CLIENT_ID\"" >> credentials.json
+echo "\"CLIENT_SECRET:\"" "\"$CLIENT_SECRET\"" >> credentials.json
+echo "\"REDIRECT_URI:\"" "\"$REDIRECT_URI\"" >> credentials.json
+echo "}" >> credentials.json
 
-echo "Generated ./credentials.py"
+echo "Generated credentials.json"
 
 echo "pip installing requirements..."
 pip install -r requirements.txt
