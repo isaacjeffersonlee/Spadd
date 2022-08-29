@@ -27,6 +27,7 @@ Requires dmenu / bemenu
 sudo pacman -S bemenu dmenu
 ```
 
+### Installing
 Then to install just run the install script:
 ```sh
 ./install.sh
