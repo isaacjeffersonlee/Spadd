@@ -3,16 +3,13 @@ import subprocess
 import os
 import json
 import spotipy
-from spotipy.oauth2 import SpotifyOAuth
 
 # Absolute path of the spadd module directory
-MODULE_PATH = os.path.abspath(
-    os.path.join(os.path.dirname(__file__))
-)
+MODULE_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__)))
 # Absolute path of the parent directory of spadd module
 ROOT_PATH = os.path.dirname(MODULE_PATH)
 # Get app credentials
-with open(f"{ROOT_PATH}/credentials.json", 'r') as f:
+with open(f"{ROOT_PATH}/credentials.json", "r") as f:
     credentials = json.load(f)
 CLIENT_SECRET = credentials["CLIENT_SECRET"]
 CLIENT_ID = credentials["CLIENT_ID"]
@@ -87,7 +84,7 @@ def menu_show(items: list[str], prompt: str = "> ") -> str:
         menu = "bemenu"
     else:  # Fallback to dmenu if x11 or $XDG_SESSION_TYPE not found
         menu = "dmenu"
-    newline_items = "\\n".join([str(item) for item in items])
+    newline_items = "\\n".join([str(item).replace("'", "") for item in items])
     cmd = f"printf '{newline_items}' | {menu} -i -p '{prompt}' -l {len(items)}"
     ps = subprocess.Popen(
         cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT
@@ -100,12 +97,12 @@ def main() -> None:
     """Entry point."""
     playlists = sp.current_user_playlists(limit=50, offset=0)["items"]
     playlist_names = [playlist["name"] for playlist in playlists]
-    playlist_name = menu_show(playlist_names, "Select playlist: ")
+    playlist_name = menu_show(playlist_names)
     if not playlist_name:
         pass
     else:
         for playlist in playlists:
-            if playlist["name"] == playlist_name:
+            if playlist["name"].replace("'", "") == playlist_name:
                 playlist_uri = playlist["uri"]
 
         current_track_info = sp.current_user_playing_track()
@@ -114,7 +111,7 @@ def main() -> None:
             sp.playlist_add_items(playlist_uri, [cur_track_uri])
             sp_notify(
                 title="Added Song",
-                description=f"Added "
+                description="Added "
                 + f"{sp.current_user_playing_track()['item']['name']}"
                 + f"to {playlist_name}",
                 duration=4,
